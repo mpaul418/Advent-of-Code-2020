@@ -21,9 +21,8 @@ fs.readFile('./Day-3/input.txt', 'utf8', (err, data) => {
        return treesHit
     }
     
-    const reducer = (accumulator, currentValue) => accumulator * currentValue;
     const slopeTreeCounts = [slopeTreesHit(1,1), slopeTreesHit(3,1), slopeTreesHit(5,1), slopeTreesHit(7,1), slopeTreesHit(1,2)]
 
     console.log(`Part 1 trees hit: ${slopeTreeCounts[1]}`)
-    console.log(`Product of all trees hit: ${slopeTreeCounts.reduce(reducer)}`)
+    console.log(`Product of all trees hit: ${slopeTreeCounts.reduce((accumulator, currentValue) => accumulator * currentValue)}`)
 })
