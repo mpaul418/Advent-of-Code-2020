@@ -4,7 +4,7 @@ fs.readFile('./Day-7/input.txt', 'utf8', (err, data) => {
     const lines = data.trim().split('\n')
     const queue = []
     let visited = new Map()
-    let neighbors = new Map() // adjacency list of incoming edges to a vertex
+    let bagParents = new Map() // adjacency list of incoming edges to a vertex
     let bagContains = new Map() // adjacency list of outgoing edges from a vertex
     let totalContainingBags = 0
     let bagsInShinyGold = 0
@@ -30,12 +30,12 @@ fs.readFile('./Day-7/input.txt', 'utf8', (err, data) => {
             }
             else { bagContains.get(parentBag).push([currentBag, bagNumber])}
 
-            if(neighbors.get(currentBag) === undefined) {
-                neighbors.set(currentBag, [parentBag])
+            if(bagParents.get(currentBag) === undefined) {
+                bagParents.set(currentBag, [parentBag])
             }
             else { 
-                if(neighbors.get(currentBag).findIndex(val => val === parentBag) === -1) {
-                    neighbors.get(currentBag).push(parentBag)
+                if(bagParents.get(currentBag).findIndex(val => val === parentBag) === -1) {
+                    bagParents.get(currentBag).push(parentBag)
                 }
             }  
         }
@@ -47,7 +47,7 @@ fs.readFile('./Day-7/input.txt', 'utf8', (err, data) => {
     while(queue.length > 0) {
         let currentBag = queue.shift()
         visited.set(currentBag, 1)
-        let currentParents = neighbors.get(currentBag)
+        let currentParents = bagParents.get(currentBag)
         
         if(currentParents !== undefined) {
             currentParents.forEach(parent => {
