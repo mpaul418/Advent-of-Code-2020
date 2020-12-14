@@ -33,7 +33,6 @@ fs.readFile('./Day-13/input.txt', 'utf8', (err, data) => {
             max = busOrder[i]
         }
     }
-    let validTimestamp = false
     let i = 0
     const convergences = [max]
     let convergenceSum = max
@@ -43,7 +42,7 @@ fs.readFile('./Day-13/input.txt', 'utf8', (err, data) => {
         timestamp += convergenceSum - (timestamp + maxIndex) % convergenceSum
     }
 
-    while(!validTimestamp) {
+    while(true) {
         for(i = 0; i < busOrder.length; i++) {
             let busID = busOrder[i]
             if(busID !== -1 && convergences.indexOf(busID) === -1) {
