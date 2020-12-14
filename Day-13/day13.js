@@ -1,4 +1,3 @@
-const { time } = require('console');
 const fs = require('fs');
 
 fs.readFile('./Day-13/input.txt', 'utf8', (err, data) => {
