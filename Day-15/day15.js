@@ -8,23 +8,18 @@ fs.readFile('./Day-15/input.txt', 'utf8', (err, data) => {
     const numberGame = (maxTurn) => {
         const spokenNumbers = new Map()
     
-        for(let i = 0; i < startingNumbers.length; i++)
-            spokenNumbers.set(startingNumbers[i], [i + 1, 0])
+        for(let i = 0; i < startingNumbers.length - 1; i++)
+            spokenNumbers.set(startingNumbers[i], i + 1)
 
         let lastSpokenNumber = startingNumbers[startingNumbers.length - 1]
 
-        for(let turnNumber = startingNumbers.length + 1; turnNumber < maxTurn; turnNumber++) {
-            let lastSpokenNum = spokenNumbers.get(lastSpokenNumber)
-            if(!lastSpokenNum) {
-                spokenNumbers.set(lastSpokenNumber, [turnNumber, 0])
-            }
-            let nextNumber = lastSpokenNum[1] === 0 ? 0 : lastSpokenNum[0] - lastSpokenNum[1]
-            let nextNumHistory = spokenNumbers.get(nextNumber)
+        for(let turnNumber = startingNumbers.length; turnNumber < maxTurn; turnNumber++) {
+            let nextNumber = spokenNumbers.has(lastSpokenNumber) ? turnNumber - spokenNumbers.get(lastSpokenNumber) : 0
     
-            spokenNumbers.set(nextNumber, [turnNumber, nextNumHistory ? nextNumHistory[0] : 0]) // shifts the first index one to the right
+            spokenNumbers.set(lastSpokenNumber, turnNumber)
             lastSpokenNumber = nextNumber
         }
-        return spokenNumbers.get(lastSpokenNumber)[0] - spokenNumbers.get(lastSpokenNumber)[1]
+        return lastSpokenNumber
     }
     console.log(`The 2020th number spoken is ${numberGame(2020)}.`)
     console.log(`The 30000000th number spoken is ${numberGame(30000000)}.`)
